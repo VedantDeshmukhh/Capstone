@@ -63,6 +63,7 @@ public class ComplaintManager implements ComplaintOperations {
             return "You already supported this complaint.";   // one vote per person
         }
         c.getSupporters().add(user.getUsername());
+        store.addAuditLog(user.getUsername(), "VOTE_ADDED", id, "Supported complaint #" + id);
         store.save();
         return "Thanks, your support was added.";
     }
@@ -76,6 +77,7 @@ public class ComplaintManager implements ComplaintOperations {
         if (!c.getSupporters().remove(user.getUsername())) {
             return "You have not supported this complaint.";
         }
+        store.addAuditLog(user.getUsername(), "VOTE_REMOVED", id, "Removed vote from complaint #" + id);
         store.save();
         return "Your support was removed.";
     }
@@ -90,6 +92,7 @@ public class ComplaintManager implements ComplaintOperations {
         if (c.getStatus().equals("Submitted") || c.getStatus().equals("Under Review")) {
             c.setStatus("Assigned");
         }
+        store.addAuditLog("admin", "ASSIGNED", id, "Assigned complaint #" + id + " to " + assignedTo);
         store.save();
         return "Assigned to " + assignedTo + ".";
     }
@@ -100,8 +103,10 @@ public class ComplaintManager implements ComplaintOperations {
         if (c == null) {
             return "No complaint with this ID.";
         }
+        String oldStatus = c.getStatus();
         c.setStatus(newStatus);
         c.setNote(note);
+        store.addAuditLog("admin", "STATUS_CHANGE", id, "Changed status from '" + oldStatus + "' to '" + newStatus + "'" + (note.isEmpty() ? "" : " (Note: " + note + ")"));
         store.save();
         return "Status changed to " + newStatus + ".";
     }
@@ -114,6 +119,7 @@ public class ComplaintManager implements ComplaintOperations {
         }
         c.setSeverity(severity);
         c.setSafetyCritical(safetyCritical);
+        store.addAuditLog("admin", "SEVERITY_UPDATE", id, "Set severity=" + severity + ", safetyCritical=" + safetyCritical);
         store.save();
         return "Severity saved.";
     }
@@ -194,5 +200,20 @@ public class ComplaintManager implements ComplaintOperations {
             }
         });
         return list;
+    }
+
+    public String updateAccount(String username, String newFullName, String newGroup, String newPassword) {
+        Account acc = store.findAccount(username);
+        if (acc == null) {
+            return "User not found.";
+        }
+        acc.setFullName(newFullName);
+        acc.setGroupName(newGroup);
+        if (newPassword != null && !newPassword.trim().isEmpty()) {
+            acc.setPasswordHash(com.resolvex.util.PasswordUtil.hash(acc.getUsername(), newPassword.trim()));
+        }
+        store.addAuditLog("admin", "ACCOUNT_UPDATE", 0, "Updated account: " + username + " (" + newFullName + ", " + newGroup + ")");
+        store.save();
+        return "Student updated successfully.";
     }
 }

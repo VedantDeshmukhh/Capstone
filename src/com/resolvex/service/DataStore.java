@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.resolvex.model.Account;
+import com.resolvex.model.AuditLog;
 import com.resolvex.model.Category;
 import com.resolvex.model.Complaint;
 import com.resolvex.model.StudentGroup;
@@ -29,6 +30,7 @@ public class DataStore {
     private static final Path ACCOUNT_FILE = Paths.get(FOLDER, "accounts.txt");
     private static final Path GROUP_FILE = Paths.get(FOLDER, "groups.txt");
     private static final Path CATEGORY_FILE = Paths.get(FOLDER, "categories.txt");
+    private static final Path AUDIT_FILE = Paths.get(FOLDER, "audit_log.txt");
     private static final Path STUDENT_CSV = Paths.get(FOLDER, "import", "students.csv");
     private static final Path COMPLAINT_CSV = Paths.get(FOLDER, "import", "complaints.csv");
 
@@ -36,6 +38,7 @@ public class DataStore {
     private List<Account> accounts = new ArrayList<>();
     private List<StudentGroup> groups = new ArrayList<>();
     private List<Category> categories = new ArrayList<>();
+    private List<AuditLog> auditLogs = new ArrayList<>();
 
     public DataStore() {
         new File(FOLDER).mkdirs();
@@ -53,6 +56,7 @@ public class DataStore {
     public List<Account> getAccounts() { return accounts; }
     public List<StudentGroup> getGroups() { return groups; }
     public List<Category> getCategories() { return categories; }
+    public List<AuditLog> getAuditLogs() { return auditLogs; }
 
     // ----- reading and writing the files -----
 
@@ -93,6 +97,15 @@ public class DataStore {
                 categories.add(Category.fromLine(line));
             }
         }
+        auditLogs = new ArrayList<>();
+        for (String line : readLines(AUDIT_FILE)) {
+            if (!line.trim().isEmpty()) {
+                AuditLog log = AuditLog.fromLine(line);
+                if (log != null) {
+                    auditLogs.add(log);
+                }
+            }
+        }
     }
 
     public void save() {
@@ -120,14 +133,31 @@ public class DataStore {
                 lines.add(c.toLine());
             }
             Files.write(CATEGORY_FILE, lines, StandardCharsets.UTF_8);
+
+            lines = new ArrayList<>();
+            for (AuditLog al : auditLogs) {
+                lines.add(al.toLine());
+            }
+            Files.write(AUDIT_FILE, lines, StandardCharsets.UTF_8);
         } catch (IOException e) {
-            System.out.println("Could not save data: " + e.getMessage());
+            System.out.println("Could not save to files: " + e);
         }
+    }
+
+    public void addAuditLog(String username, String actionType, int complaintId, String details) {
+        AuditLog log = AuditLog.create(username, actionType, complaintId, details);
+        auditLogs.add(0, log); // keep newest at top
+        // trim if gets overly large (keep last 500)
+        if (auditLogs.size() > 500) {
+            auditLogs = new ArrayList<>(auditLogs.subList(0, 500));
+        }
+        save();
     }
 
     // ----- search helpers -----
 
     public Account findAccount(String username) {
+        if (username == null) return null;
         for (Account a : accounts) {
             if (a.getUsername().equalsIgnoreCase(username)) {
                 return a;
@@ -137,6 +167,7 @@ public class DataStore {
     }
 
     public StudentGroup findGroup(String name) {
+        if (name == null) return null;
         for (StudentGroup g : groups) {
             if (g.getName().equalsIgnoreCase(name)) {
                 return g;
@@ -146,6 +177,7 @@ public class DataStore {
     }
 
     public Category findCategory(String name) {
+        if (name == null) return null;
         for (Category c : categories) {
             if (c.getName().equalsIgnoreCase(name)) {
                 return c;
@@ -164,42 +196,34 @@ public class DataStore {
     }
 
     public int nextComplaintId() {
-        int max = 1000;   // ticket numbers start from 1001
+        int max = 1000;
         for (Complaint c : complaints) {
-            max = Math.max(max, c.getId());
+            if (c.getId() > max) {
+                max = c.getId();
+            }
         }
         return max + 1;
     }
 
-    // ----- first run: load the real student and complaint lists from data/import -----
+    // ----- CSV helpers -----
 
-    // splits one CSV line (handles "quoted, text" and "" inside quotes)
     private static List<String> csvFields(String line) {
-        List<String> out = new ArrayList<>();
+        List<String> list = new ArrayList<>();
         StringBuilder cur = new StringBuilder();
-        boolean quoted = false;
+        boolean inQuotes = false;
         for (int i = 0; i < line.length(); i++) {
             char ch = line.charAt(i);
-            if (quoted) {
-                if (ch == '"' && i + 1 < line.length() && line.charAt(i + 1) == '"') {
-                    cur.append('"');
-                    i++;
-                } else if (ch == '"') {
-                    quoted = false;
-                } else {
-                    cur.append(ch);
-                }
-            } else if (ch == '"') {
-                quoted = true;
-            } else if (ch == ',') {
-                out.add(cur.toString().trim());
+            if (ch == '\"') {
+                inQuotes = !inQuotes;
+            } else if (ch == ',' && !inQuotes) {
+                list.add(cur.toString().trim());
                 cur.setLength(0);
             } else {
                 cur.append(ch);
             }
         }
-        out.add(cur.toString().trim());
-        return out;
+        list.add(cur.toString().trim());
+        return list;
     }
 
     private List<List<String>> readCsv(Path file) {
@@ -213,8 +237,6 @@ public class DataStore {
         return rows;
     }
 
-    // Section sizes are the number of students listed for each section in students.csv,
-    // so the percentages always match the real student list.
     private void importFromCsv() {
         accounts.add(new Account("admin", PasswordUtil.hash("admin", "admin123"), "College Admin", "ADMIN", "-"));
 
@@ -252,6 +274,8 @@ public class DataStore {
             }
             complaints.add(c);
         }
+
+        addAuditLog("system", "SYSTEM_INIT", 0, "System database initialized with baseline records.");
     }
 
     private void createDefaultCategories() {

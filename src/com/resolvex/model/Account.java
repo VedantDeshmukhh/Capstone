@@ -19,9 +19,13 @@ public class Account {
 
     public String getUsername() { return username; }
     public String getPasswordHash() { return passwordHash; }
+    public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
     public String getFullName() { return fullName; }
+    public void setFullName(String fullName) { this.fullName = fullName; }
     public String getRole() { return role; }
+    public void setRole(String role) { this.role = role; }
     public String getGroupName() { return groupName; }
+    public void setGroupName(String groupName) { this.groupName = groupName; }
 
     public String toLine() {
         return username + "|" + passwordHash + "|" + fullName + "|" + role + "|" + groupName;
