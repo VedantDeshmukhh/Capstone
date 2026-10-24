@@ -27,8 +27,7 @@ public class Layout {
         // top header
         sb.append("<header class=\"header\">\n");
         sb.append("  <div class=\"brand-wrap\">\n");
-        sb.append("    <span class=\"logo-badge\">R</span>\n");
-        sb.append("    <span class=\"logo-text\">ResolveX</span>\n");
+        sb.append("    <span class=\"brand-title\">Resolve<span class=\"brand-gradient\">X</span></span>\n");
         sb.append("    <span class=\"subtitle-tag\">").append(Web.esc(subtitle)).append("</span>\n");
         sb.append("  </div>\n");
         sb.append("  <a class=\"logout-btn\" href=\"/logout\">Sign Out</a>\n");
@@ -79,9 +78,8 @@ public class Layout {
         sb.append("<link rel=\"stylesheet\" href=\"/style.css\">\n</head>\n<body class=\"login-body\">\n");
         sb.append("<div class=\"login-box\">\n");
         sb.append("  <div class=\"logo-center\">\n");
-        sb.append("    <span class=\"logo-badge\" style=\"width:44px; height:44px; font-size:22px;\">R</span>\n");
-        sb.append("    <h1>ResolveX</h1>\n");
-        sb.append("    <p class=\"muted\" style=\"margin-top:4px;\">").append(Web.esc(heading)).append("</p>\n");
+        sb.append("    <h1 class=\"brand-title\" style=\"font-size:32px;\">Resolve<span class=\"brand-gradient\">X</span></h1>\n");
+        sb.append("    <p class=\"muted\" style=\"margin-top:6px;\">").append(Web.esc(heading)).append("</p>\n");
         sb.append("  </div>\n");
         if (error != null && !error.isEmpty()) {
             sb.append("  <div class=\"error\">").append(Web.esc(error)).append("</div>\n");

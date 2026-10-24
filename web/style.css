@@ -86,36 +86,46 @@ a:hover {
     gap: 14px;
 }
 
-.logo-badge {
+/* ---------- Brand Title Typography (No weird R logo) ---------- */
+.brand-title {
+    font-size: 21px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.5px;
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    width: 34px;
-    height: 34px;
-    background: linear-gradient(135deg, #ea580c, #f97316);
-    color: #ffffff;
-    font-weight: 800;
-    font-size: 17px;
-    border-radius: var(--radius-sm);
-    box-shadow: 0 2px 10px rgba(234, 88, 12, 0.4);
-    letter-spacing: -0.5px;
 }
 
-.logo-text {
-    font-size: 19px;
-    font-weight: 700;
-    color: #ffffff;
-    letter-spacing: -0.3px;
+.brand-gradient {
+    background: linear-gradient(135deg, #f97316, #fb923c, #f59e0b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 900;
+    padding-left: 1px;
+}
+
+/* Multi-color Gradient Headers & Accents */
+.text-gradient-orange {
+    background: linear-gradient(135deg, #ffffff 40%, #fdba74 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-fire {
+    background: linear-gradient(135deg, #f97316, #fb923c, #fbbf24);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .subtitle-tag {
     font-size: 12px;
-    color: var(--accent-light);
-    background: var(--accent-badge);
-    border: 1px solid rgba(234, 88, 12, 0.3);
-    padding: 3px 10px;
+    color: #fdba74;
+    background: rgba(234, 88, 12, 0.16);
+    border: 1px solid rgba(249, 115, 22, 0.35);
+    padding: 3px 12px;
     border-radius: 20px;
     font-weight: 600;
+    box-shadow: 0 0 12px rgba(234, 88, 12, 0.15);
 }
 
 .logout-btn {

@@ -286,7 +286,18 @@ public class AdminServer {
             sb.append("<td>").append(Layout.scoreBar(calc.score(c), c.isSafetyCritical())).append("</td>");
             sb.append("<td>").append(Layout.badge(c)).append("</td>");
             sb.append("<td>").append(assigned).append("</td>");
-            sb.append("<td><a class=\"button small light\" href=\"/admin/complaint?id=").append(c.getId()).append("\">Review &amp; Votes</a></td>");
+            sb.append("<td>\n");
+            // Quick Status Changer in table
+            sb.append("<form method=\"post\" action=\"/admin/status\" style=\"display:flex; gap:6px; align-items:center; margin-bottom:4px;\">\n");
+            sb.append("<input type=\"hidden\" name=\"id\" value=\"").append(c.getId()).append("\">\n");
+            sb.append("<input type=\"hidden\" name=\"redirect\" value=\"/admin/section?name=").append(Web.encode(section)).append("\">\n");
+            sb.append("<select name=\"status\" style=\"padding:4px 6px; font-size:11.5px; border-radius:6px; background:#121215; color:#f4f4f5; width:110px;\">")
+              .append(options(ComplaintManager.STATUSES, c.getStatus())).append("</select>\n");
+            sb.append("<input type=\"hidden\" name=\"note\" value=\"Updated from section table\">\n");
+            sb.append("<button type=\"submit\" class=\"small\" style=\"padding:3px 8px; font-size:11px;\">Set</button>\n");
+            sb.append("</form>\n");
+            sb.append("<a class=\"button small light\" style=\"font-size:11px; padding:3px 8px;\" href=\"/admin/complaint?id=").append(c.getId()).append("\">Review &amp; Votes</a>\n");
+            sb.append("</td>");
             sb.append("</tr>\n");
         }
         sb.append("</tbody></table>\n</div>");
@@ -714,11 +725,11 @@ public class AdminServer {
             }
             case "/admin/status": {
                 String note = Web.clean(f.get("note"));
+                String redirectTarget = f.getOrDefault("redirect", back);
                 if (note.isEmpty()) {
-                    Web.redirect(ex, back, "A reason note is required to change status.");
-                } else {
-                    Web.redirect(ex, back, manager.changeStatus(id, f.get("status"), note));
+                    note = "Status updated by admin";
                 }
+                Web.redirect(ex, redirectTarget, manager.changeStatus(id, f.get("status"), note));
                 break;
             }
             case "/admin/category":
