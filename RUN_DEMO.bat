@@ -1,7 +1,7 @@
 @echo off
 setlocal
 cd /d "%~dp0"
-title ResolveX Demo Launcher
+title ResolveX Launcher
 cls
 
 echo ================================================================
@@ -22,13 +22,13 @@ if errorlevel 1 (
 echo [OK] Compilation successful.
 echo.
 
-echo [2/3] Starting ResolveX Servers silently in background ...
-start /b "" javaw -cp bin com.resolvex.AdminMain 8080
-timeout /t 2 >nul
+echo [2/3] Starting ResolveX Servers ...
+start "ResolveX Admin Server" /min cmd /c "java -cp bin com.resolvex.AdminMain 8080"
+ping 127.0.0.1 -n 3 >nul
 
-start /b "" javaw -cp bin com.resolvex.UserMain 8081
-timeout /t 2 >nul
-echo [OK] Background servers running smoothly on ports 8080 and 8081.
+start "ResolveX Student Portal" /min cmd /c "java -cp bin com.resolvex.UserMain 8081"
+ping 127.0.0.1 -n 3 >nul
+echo [OK] Background servers running on ports 8080 and 8081.
 echo.
 
 echo [3/3] Opening Browser Windows ...
@@ -41,15 +41,15 @@ echo                     ResolveX is LIVE!
 echo ================================================================
 echo.
 echo   ADMIN DASHBOARD : http://localhost:8080/login
-echo   Login           : admin  /  admin123
+echo   Credentials     : admin  /  admin123
 echo.
 echo   STUDENT PORTAL  : http://localhost:8081/login
-echo   Login           : cse1   /  pass123
+echo   Credentials     : cse1   /  pass123
 echo                     (or aids1 / pass123, aiml1 / pass123)
 echo.
 echo ================================================================
-echo   Servers are running silently in the background.
+echo   Servers are active in the background.
 echo   To stop servers anytime, double-click STOP.bat
 echo ================================================================
-timeout /t 5 >nul
+ping 127.0.0.1 -n 4 >nul
 exit

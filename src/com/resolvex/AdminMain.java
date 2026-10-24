@@ -12,5 +12,7 @@ public class AdminMain {
             } catch (Exception ignored) {}
         }
         new AdminServer().start(port);
+        // Keep the JVM alive when started via javaw in background
+        Thread.currentThread().join();
     }
 }

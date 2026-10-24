@@ -12,5 +12,7 @@ public class UserMain {
             } catch (Exception ignored) {}
         }
         new UserServer().start(port);
+        // Keep the JVM alive when started via javaw in background
+        Thread.currentThread().join();
     }
 }
