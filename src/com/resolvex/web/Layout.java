@@ -134,6 +134,19 @@ public class Layout {
         return "<span class=\"badge-cat " + Web.esc(catClass) + "\">" + Web.esc(cat) + "</span>";
     }
 
+    // Clean metric pill tags for priority rationale
+    public static String priorityTags(Complaint c, PriorityCalculator calc) {
+        StringBuilder sb = new StringBuilder("<div style=\"display:flex; flex-wrap:wrap; gap:6px; align-items:center;\">");
+        if (c.isSafetyCritical()) {
+            sb.append("<span class=\"badge critical\">Safety Critical (Top Priority)</span>");
+        }
+        sb.append("<span class=\"badge grey\">Severity: ").append(c.getSeverity()).append("/3</span>");
+        sb.append("<span class=\"badge grey\">Urgency: ").append(c.getUrgency()).append("/3</span>");
+        sb.append("<span class=\"badge grey\">Waiting: ").append(calc.daysWaiting(c)).append("d</span>");
+        sb.append("</div>");
+        return sb.toString();
+    }
+
     // score number with a bar
     public static String scoreBar(double score, boolean critical) {
         String css = critical ? "bar red" : "bar";

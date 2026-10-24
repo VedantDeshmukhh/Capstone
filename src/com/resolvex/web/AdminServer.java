@@ -352,7 +352,7 @@ public class AdminServer {
 
         sb.append(row("Urgency / Severity", "Urgency: " + c.getUrgency() + " / 5 &nbsp;|&nbsp; Severity: " + c.getSeverity() + " / 5"));
         sb.append(row("Priority score", Layout.scoreBar(calc.score(c), c.isSafetyCritical())));
-        sb.append(row("Ranking Rationale", Web.esc(calc.explain(c))));
+        sb.append(row("Ranking Factors", Layout.priorityTags(c, calc)));
         sb.append(row("Current Status", Layout.badge(c) + " &nbsp; <span class=\"muted\">" + Web.esc(c.getStatus()) + "</span>"));
         sb.append(row("Assigned to", c.getAssignedTo().isEmpty() ? "<span class=\"muted\">Unassigned</span>" : Web.esc(c.getAssignedTo())));
         sb.append(row("Latest note", c.getNote().isEmpty() ? "<span class=\"muted\">No note added</span>" : Web.esc(c.getNote())));
@@ -535,7 +535,7 @@ public class AdminServer {
               .append(" <span class=\"muted\">(").append(calc.supportPercent(c)).append("%)</span></td>");
             sb.append("<td>").append(Layout.badge(c)).append("</td>");
             sb.append("<td>").append(Layout.scoreBar(calc.score(c), c.isSafetyCritical())).append("</td>");
-            sb.append("<td>").append(Web.esc(calc.explain(c))).append("</td>");
+            sb.append("<td>").append(Layout.priorityTags(c, calc)).append("</td>");
             sb.append("</tr>\n");
         }
         sb.append("</tbody></table>\n</div>\n");
