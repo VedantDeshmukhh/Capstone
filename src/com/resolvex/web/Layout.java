@@ -120,6 +120,20 @@ public class Layout {
         return "<span class=\"badge " + css + "\">" + Web.esc(text) + "</span>";
     }
 
+    // distinct coloured badge for section
+    public static String sectionBadge(String section) {
+        String sec = section == null ? "" : section.toUpperCase().trim();
+        String css = "badge-sec " + sec;
+        return "<span class=\"" + css + "\">" + Web.esc(sec) + "</span>";
+    }
+
+    // distinct coloured badge for category
+    public static String categoryBadge(String category) {
+        String cat = category == null ? "Other" : category.trim();
+        String catClass = cat.replace(" ", "_").replace("/", "_");
+        return "<span class=\"badge-cat " + Web.esc(catClass) + "\">" + Web.esc(cat) + "</span>";
+    }
+
     // score number with a bar
     public static String scoreBar(double score, boolean critical) {
         String css = critical ? "bar red" : "bar";

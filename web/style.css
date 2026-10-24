@@ -1,37 +1,48 @@
-/* ResolveX - Modern Black & Deep Orange Dark Theme */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+/* ResolveX - Multi-Color Vibrant Dark Theme (Distinct colors per CSE / AIDS / AIML / Categories) */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
-    --bg-main: #09090b;
-    --bg-card: #121215;
-    --bg-surface: #18181c;
-    --bg-hover: #222228;
-    --border: #27272f;
-    --border-light: #363640;
+    --bg-main: #0c0d12;
+    --bg-card: #13151f;
+    --bg-surface: #1a1c29;
+    --bg-hover: #232738;
+    --border: #262a3d;
+    --border-light: #343952;
     
-    /* 40% Deep Orange palette */
+    /* Dynamic Department Identities (Separate Colors) */
+    --cse-color: #3b82f6;          /* CSE: Electric Blue */
+    --cse-bg: rgba(59, 130, 246, 0.16);
+    --cse-border: rgba(59, 130, 246, 0.35);
+
+    --aids-color: #10b981;         /* AIDS: Emerald Green */
+    --aids-bg: rgba(16, 185, 129, 0.16);
+    --aids-border: rgba(16, 185, 129, 0.35);
+
+    --aiml-color: #a855f7;         /* AIML: Purple Violet */
+    --aiml-bg: rgba(168, 85, 247, 0.16);
+    --aiml-border: rgba(168, 85, 247, 0.35);
+
+    /* Category Specific Colors */
+    --cat-electrical: #f59e0b;     /* Amber */
+    --cat-it: #06b6d4;             /* Cyan */
+    --cat-facilities: #ec4899;     /* Pink */
+    --cat-safety: #ef4444;         /* Red */
+    --cat-academic: #8b5cf6;       /* Indigo */
+    
+    /* Core Deep Orange Accent */
     --accent: #ea580c;
     --accent-hover: #c2410c;
     --accent-light: #f97316;
-    --accent-glow: rgba(234, 88, 12, 0.18);
-    --accent-badge: rgba(234, 88, 12, 0.15);
+    --accent-glow: rgba(234, 88, 12, 0.22);
     
-    --text-primary: #f4f4f5;
-    --text-secondary: #a1a1aa;
-    --text-muted: #71717a;
-    
-    --success: #10b981;
-    --success-bg: rgba(16, 185, 129, 0.12);
-    --danger: #ef4444;
-    --danger-bg: rgba(239, 68, 68, 0.15);
-    --info: #0284c7;
-    --info-bg: rgba(2, 132, 199, 0.15);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
     
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 16px;
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
-    --shadow-glow: 0 0 20px rgba(234, 88, 12, 0.25);
+    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 * {
@@ -47,8 +58,9 @@ body {
     color: var(--text-primary);
     background-color: var(--bg-main);
     background-image: 
-        radial-gradient(at 0% 0%, rgba(234, 88, 12, 0.08) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(234, 88, 12, 0.04) 0px, transparent 50%);
+        radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.08) 0px, transparent 40%),
+        radial-gradient(at 100% 0%, rgba(234, 88, 12, 0.08) 0px, transparent 40%),
+        radial-gradient(at 50% 100%, rgba(168, 85, 247, 0.06) 0px, transparent 50%);
     background-attachment: fixed;
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
@@ -57,19 +69,18 @@ body {
 a {
     color: var(--accent-light);
     text-decoration: none;
-    transition: color 0.15s ease, border-color 0.15s ease;
+    transition: all 0.15s ease;
 }
 
 a:hover {
-    color: #fb923c;
-    text-decoration: none;
+    color: #fdba74;
 }
 
-/* ---------- Header ---------- */
+/* Header */
 .header {
-    background: rgba(18, 18, 21, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(19, 21, 31, 0.88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border);
     padding: 14px 28px;
     display: flex;
@@ -86,7 +97,6 @@ a:hover {
     gap: 14px;
 }
 
-/* ---------- Brand Title Typography (No weird R logo) ---------- */
 .brand-title {
     font-size: 21px;
     font-weight: 800;
@@ -101,20 +111,7 @@ a:hover {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 900;
-    padding-left: 1px;
-}
-
-/* Multi-color Gradient Headers & Accents */
-.text-gradient-orange {
-    background: linear-gradient(135deg, #ffffff 40%, #fdba74 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.text-gradient-fire {
-    background: linear-gradient(135deg, #f97316, #fb923c, #fbbf24);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    padding-left: 2px;
 }
 
 .subtitle-tag {
@@ -125,7 +122,6 @@ a:hover {
     padding: 3px 12px;
     border-radius: 20px;
     font-weight: 600;
-    box-shadow: 0 0 12px rgba(234, 88, 12, 0.15);
 }
 
 .logout-btn {
@@ -148,7 +144,7 @@ a:hover {
     border-color: var(--border-light);
 }
 
-/* ---------- Layout & Sidebar ---------- */
+/* Layout */
 .layout {
     display: flex;
     min-height: calc(100vh - 63px);
@@ -156,7 +152,7 @@ a:hover {
 
 .sidebar {
     width: 250px;
-    background: rgba(18, 18, 21, 0.65);
+    background: rgba(19, 21, 31, 0.7);
     border-right: 1px solid var(--border);
     padding: 20px 14px;
     flex-shrink: 0;
@@ -190,7 +186,7 @@ a:hover {
 }
 
 .sidebar a.active {
-    background: linear-gradient(90deg, rgba(234, 88, 12, 0.18), rgba(234, 88, 12, 0.05));
+    background: linear-gradient(90deg, rgba(234, 88, 12, 0.22), rgba(234, 88, 12, 0.05));
     color: var(--accent-light);
     font-weight: 600;
     border-left: 3px solid var(--accent);
@@ -223,7 +219,7 @@ a:hover {
     margin-bottom: 20px;
 }
 
-/* ---------- Stat Cards ---------- */
+/* Stat Cards */
 .cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
@@ -236,8 +232,8 @@ a:hover {
     border: 1px solid var(--border);
     padding: 18px 20px;
     border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
-    transition: border-color 0.2s ease, transform 0.2s ease;
+    box-shadow: var(--shadow-card);
+    transition: all 0.2s ease;
 }
 
 .card:hover {
@@ -251,9 +247,6 @@ a:hover {
     color: #ffffff;
     letter-spacing: -1px;
     line-height: 1.1;
-    background: linear-gradient(135deg, #ffffff, #d4d4d8);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
 }
 
 .card .label {
@@ -261,17 +254,16 @@ a:hover {
     font-size: 12.5px;
     font-weight: 500;
     margin-top: 6px;
-    text-transform: capitalize;
 }
 
-/* ---------- Panel & Table Containers ---------- */
+/* Panels & Tables */
 .panel {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     margin-bottom: 24px;
     overflow: hidden;
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-card);
 }
 
 .panel-title {
@@ -290,7 +282,6 @@ a:hover {
     padding: 22px;
 }
 
-/* ---------- Modern Tables ---------- */
 table {
     width: 100%;
     border-collapse: separate;
@@ -299,7 +290,7 @@ table {
 
 th {
     text-align: left;
-    background: rgba(24, 24, 28, 0.7);
+    background: rgba(26, 28, 41, 0.7);
     color: var(--text-secondary);
     font-size: 12px;
     font-weight: 600;
@@ -321,24 +312,58 @@ tr:last-child td {
     border-bottom: none;
 }
 
-tbody tr {
-    transition: background 0.15s ease;
-}
-
 tbody tr:hover {
     background: rgba(255, 255, 255, 0.02);
 }
 
-td.bold a {
+/* Distinct Section Badges (Separate Colors) */
+.badge-sec {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+
+.badge-sec.CSE {
+    color: var(--cse-color);
+    background: var(--cse-bg);
+    border: 1px solid var(--cse-border);
+}
+
+.badge-sec.AIDS {
+    color: var(--aids-color);
+    background: var(--aids-bg);
+    border: 1px solid var(--aids-border);
+}
+
+.badge-sec.AIML {
+    color: var(--aiml-color);
+    background: var(--aiml-bg);
+    border: 1px solid var(--aiml-border);
+}
+
+/* Distinct Category Badges */
+.badge-cat {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 9px;
+    border-radius: 6px;
+    font-size: 11px;
     font-weight: 600;
-    color: #ffffff;
 }
 
-td.bold a:hover {
-    color: var(--accent-light);
-}
+.badge-cat.Electrical { color: #f59e0b; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); }
+.badge-cat.IT_Network { color: #06b6d4; background: rgba(6, 182, 212, 0.15); border: 1px solid rgba(6, 182, 212, 0.3); }
+.badge-cat.Facilities { color: #ec4899; background: rgba(236, 72, 153, 0.15); border: 1px solid rgba(236, 72, 153, 0.3); }
+.badge-cat.Safety { color: #ef4444; background: rgba(239, 68, 68, 0.18); border: 1px solid rgba(239, 68, 68, 0.4); }
+.badge-cat.Academic { color: #8b5cf6; background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.3); }
+.badge-cat.Administrative { color: #10b981; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); }
+.badge-cat.Other { color: #94a3b8; background: rgba(148, 163, 184, 0.12); border: 1px solid rgba(148, 163, 184, 0.25); }
 
-/* ---------- Status Badges ---------- */
+/* Status Badges */
 .badge {
     display: inline-flex;
     align-items: center;
@@ -347,46 +372,15 @@ td.bold a:hover {
     font-weight: 600;
     border-radius: 20px;
     white-space: nowrap;
-    letter-spacing: 0.2px;
 }
 
-.badge.new {
-    background: var(--info-bg);
-    color: #38bdf8;
-    border: 1px solid rgba(56, 189, 248, 0.3);
-}
+.badge.new { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+.badge.progress { background: rgba(234, 88, 12, 0.18); color: #fb923c; border: 1px solid rgba(234, 88, 12, 0.35); }
+.badge.done { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+.badge.critical { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
+.badge.grey { background: rgba(100, 116, 139, 0.18); color: #94a3b8; border: 1px solid rgba(100, 116, 139, 0.25); }
 
-.badge.progress {
-    background: var(--accent-badge);
-    color: var(--accent-light);
-    border: 1px solid rgba(234, 88, 12, 0.35);
-}
-
-.badge.done {
-    background: var(--success-bg);
-    color: #34d399;
-    border: 1px solid rgba(16, 185, 129, 0.3);
-}
-
-.badge.critical {
-    background: var(--danger-bg);
-    color: #f87171;
-    border: 1px solid rgba(239, 68, 68, 0.4);
-    animation: pulseGlow 2.5s infinite ease-in-out;
-}
-
-.badge.grey {
-    background: rgba(113, 113, 122, 0.15);
-    color: #a1a1aa;
-    border: 1px solid rgba(113, 113, 122, 0.25);
-}
-
-@keyframes pulseGlow {
-    0%, 100% { box-shadow: 0 0 0 rgba(239, 68, 68, 0); }
-    50% { box-shadow: 0 0 10px rgba(239, 68, 68, 0.35); }
-}
-
-/* ---------- Score Bar ---------- */
+/* Score Bar */
 .score {
     display: inline-block;
     width: 36px;
@@ -399,7 +393,7 @@ td.bold a:hover {
     display: inline-block;
     width: 74px;
     height: 6px;
-    background: #27272a;
+    background: #1e2230;
     border-radius: 6px;
     vertical-align: middle;
     overflow: hidden;
@@ -416,13 +410,13 @@ td.bold a:hover {
     background: linear-gradient(90deg, #dc2626, #ef4444);
 }
 
-/* ---------- Forms & Inputs ---------- */
+/* Forms & Buttons */
 label {
     display: block;
     margin: 14px 0 6px 0;
     font-weight: 600;
     font-size: 13px;
-    color: #e4e4e7;
+    color: #e2e8f0;
 }
 
 input[type=text],
@@ -433,13 +427,13 @@ textarea {
     width: 100%;
     max-width: 440px;
     padding: 10px 14px;
-    background: #0d0d10;
+    background: #0f1118;
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
     color: #ffffff;
     font-size: 13.5px;
     font-family: inherit;
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    transition: all 0.15s ease;
 }
 
 input:focus,
@@ -448,17 +442,6 @@ textarea:focus {
     outline: none;
     border-color: var(--accent);
     box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.2);
-}
-
-textarea {
-    height: 100px;
-    resize: vertical;
-}
-
-input.check {
-    width: auto;
-    accent-color: var(--accent);
-    margin-right: 8px;
 }
 
 button,
@@ -483,7 +466,6 @@ button,
 button:hover,
 .button:hover {
     background: linear-gradient(135deg, #c2410c, #ea580c);
-    box-shadow: var(--shadow-glow);
     text-decoration: none;
 }
 
@@ -508,20 +490,14 @@ button.light:hover,
     border-color: var(--border-light);
 }
 
-button.danger {
-    background: linear-gradient(135deg, #dc2626, #ef4444);
-    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
-}
-
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
     gap: 20px;
 }
 
-/* ---------- Notifications ---------- */
 .notice {
-    background: rgba(234, 88, 12, 0.12);
+    background: rgba(234, 88, 12, 0.14);
     border: 1px solid rgba(234, 88, 12, 0.35);
     padding: 12px 18px;
     border-radius: var(--radius-sm);
@@ -531,7 +507,7 @@ button.danger {
 }
 
 .error {
-    background: var(--danger-bg);
+    background: rgba(239, 68, 68, 0.15);
     border: 1px solid rgba(239, 68, 68, 0.35);
     padding: 11px 16px;
     border-radius: var(--radius-sm);
@@ -540,14 +516,14 @@ button.danger {
     font-weight: 500;
 }
 
-/* ---------- Ticket Cards (User Dashboard) ---------- */
+/* User Ticket Cards */
 .ticket {
     border: 1px solid var(--border);
     background: var(--bg-card);
     border-radius: var(--radius-md);
     padding: 18px 22px;
     margin-bottom: 16px;
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-card);
     transition: border-color 0.15s ease;
 }
 
@@ -569,6 +545,7 @@ button.danger {
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
+    align-items: center;
 }
 
 .ticket-foot {
@@ -581,15 +558,14 @@ button.danger {
     align-items: center;
 }
 
-/* ---------- Details Page ---------- */
+/* Details Page */
 table.details td:first-child {
     width: 220px;
     color: var(--text-secondary);
     font-weight: 600;
-    background: rgba(24, 24, 28, 0.4);
+    background: rgba(26, 28, 41, 0.4);
 }
 
-/* ---------- Voters Modal / Drawer Component ---------- */
 .voter-badge-list {
     display: flex;
     flex-wrap: wrap;
@@ -601,19 +577,15 @@ table.details td:first-child {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: #09090b;
+    background: #0f1118;
     border: 1px solid var(--border);
-    padding: 4px 10px;
+    padding: 5px 12px;
     border-radius: var(--radius-sm);
     font-size: 12px;
-    color: #e4e4e7;
+    color: #f1f5f9;
 }
 
-.voter-chip strong {
-    color: var(--accent-light);
-}
-
-/* ---------- Section Filter Chips ---------- */
+/* Filter Chips with Section Colors */
 .filter {
     margin-bottom: 20px;
     display: flex;
@@ -640,7 +612,6 @@ table.details td:first-child {
 .chip:hover {
     background: var(--bg-hover);
     color: #ffffff;
-    border-color: var(--border-light);
 }
 
 .chip.active {
@@ -648,10 +619,13 @@ table.details td:first-child {
     border-color: var(--accent);
     color: #ffffff;
     font-weight: 600;
-    box-shadow: 0 2px 8px rgba(234, 88, 12, 0.4);
 }
 
-/* ---------- Login Page ---------- */
+.chip.chip-cse.active { background: var(--cse-color); border-color: var(--cse-color); }
+.chip.chip-aids.active { background: var(--aids-color); border-color: var(--aids-color); }
+.chip.chip-aiml.active { background: var(--aiml-color); border-color: var(--aiml-color); }
+
+/* Login Box */
 .login-body {
     background: var(--bg-main);
     display: flex;
@@ -666,7 +640,7 @@ table.details td:first-child {
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     padding: 36px 32px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(234, 88, 12, 0.15);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(234, 88, 12, 0.12);
 }
 
 .login-box .logo-center {
@@ -674,14 +648,6 @@ table.details td:first-child {
     flex-direction: column;
     align-items: center;
     margin-bottom: 24px;
-}
-
-.login-box h1 {
-    font-size: 24px;
-    font-weight: 800;
-    color: #ffffff;
-    margin-top: 12px;
-    letter-spacing: -0.5px;
 }
 
 .login-box input {
@@ -695,7 +661,7 @@ table.details td:first-child {
     font-size: 14px;
 }
 
-/* Modern Audit Log Badges */
+/* Audit Log Actions */
 .log-action {
     display: inline-block;
     padding: 2px 8px;
@@ -706,7 +672,7 @@ table.details td:first-child {
 }
 .log-action.STATUS_CHANGE { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
 .log-action.VOTE_ADDED { background: rgba(234, 88, 12, 0.15); color: #fb923c; border: 1px solid rgba(234, 88, 12, 0.3); }
-.log-action.VOTE_REMOVED { background: rgba(113, 113, 122, 0.15); color: #a1a1aa; border: 1px solid rgba(113, 113, 122, 0.3); }
+.log-action.VOTE_REMOVED { background: rgba(148, 163, 184, 0.15); color: #94a3b8; border: 1px solid rgba(148, 163, 184, 0.3); }
 .log-action.ASSIGNED { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
 .log-action.SEVERITY_UPDATE { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
 .log-action.ACCOUNT_UPDATE { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }

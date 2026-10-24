@@ -230,7 +230,7 @@ public class AdminServer {
             }
             double avg = total == 0 ? 0 : Math.round(supportSum / total * 10.0) / 10.0;
             sb.append("<tr><td class=\"bold\"><a href=\"").append(sectionLink(g.getName())).append("\">")
-              .append(Web.esc(g.getName())).append("</a></td><td>").append(g.getTotalPeople())
+              .append(Layout.sectionBadge(g.getName())).append("</a></td><td>").append(g.getTotalPeople())
               .append("</td><td>").append(total).append("</td><td>").append(open).append("</td><td>").append(progress)
               .append("</td><td>").append(done).append("</td><td>")
               .append(critical > 0 ? "<span class=\"badge critical\">" + critical + " Critical</span>" : "0")
@@ -280,7 +280,7 @@ public class AdminServer {
             sb.append("<td class=\"bold\"><a href=\"/admin/complaint?id=").append(c.getId()).append("\">")
               .append(Web.esc(c.getTitle())).append("</a></td>");
             sb.append("<td>").append(reporter(c.getReportedBy())).append("</td>");
-            sb.append("<td><span class=\"badge grey\">").append(Web.esc(c.getCategory())).append("</span></td>");
+            sb.append("<td>").append(Layout.categoryBadge(c.getCategory())).append("</td>");
             sb.append("<td>").append(c.getSupporters().size()).append(" / ").append(calc.eligiblePeople(c)).append("</td>");
             sb.append("<td>").append(calc.supportPercent(c)).append("%</td>");
             sb.append("<td>").append(Layout.scoreBar(calc.score(c), c.isSafetyCritical())).append("</td>");
@@ -451,7 +451,7 @@ public class AdminServer {
             sb.append("<tr>");
             sb.append("<td style=\"font-family:'JetBrains Mono',monospace;\"><strong>").append(Web.esc(acc.getUsername())).append("</strong></td>");
             sb.append("<td>").append(Web.esc(acc.getFullName())).append("</td>");
-            sb.append("<td><span class=\"badge grey\">").append(Web.esc(acc.getGroupName())).append("</span></td>");
+            sb.append("<td>").append(Layout.sectionBadge(acc.getGroupName())).append("</td>");
             sb.append("<td>\n");
             // Inline update form
             sb.append("<form method=\"post\" action=\"/admin/student-edit\" style=\"display:flex; gap:8px; align-items:center;\">\n");

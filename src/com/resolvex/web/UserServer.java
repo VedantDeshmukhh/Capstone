@@ -181,8 +181,8 @@ public class UserServer {
               .append(Web.esc(c.getTitle())).append("</a></div>\n");
             sb.append("  <div class=\"ticket-meta\">");
             sb.append("<span>Ticket #").append(c.getId()).append("</span>");
-            sb.append("<span>Category: ").append(Web.esc(c.getCategory())).append("</span>");
-            sb.append("<span>Affects: ").append(Layout.affects(c, calc)).append("</span>");
+            sb.append(Layout.categoryBadge(c.getCategory()));
+            sb.append(Layout.sectionBadge(c.getGroupName()));
             sb.append("<span>Votes: ").append(Layout.votes(c, calc)).append(" (").append(calc.supportPercent(c)).append("%)</span>");
             sb.append(Layout.badge(c));
             sb.append("</div>\n");
