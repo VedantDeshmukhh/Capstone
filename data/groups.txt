@@ -1,0 +1,3 @@
+CSE|50
+AIDS|40
+AIML|10

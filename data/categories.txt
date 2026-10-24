@@ -1,0 +1,7 @@
+Electrical|fan,light,power,switch,socket,bulb,projector,ac
+IT / Network|wifi,wi-fi,internet,network,login,computer,server,software
+Facilities|bench,door,wall,furniture,window,roof,desk,water,leak,tap,washroom,clean,printer,canteen,parking
+Safety|wire,fire,exit,danger,spark,unsafe
+Academic|lab,equipment,board,screen,exam,class,timetable,book,marker
+Administrative|id card,document,form,certificate,fees,scholarship,hall ticket
+Other|
