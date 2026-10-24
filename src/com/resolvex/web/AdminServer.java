@@ -354,8 +354,8 @@ public class AdminServer {
         sb.append("<div class=\"panel\"><div class=\"panel-title\">Set Severity &amp; Safety</div><div class=\"panel-body\">\n");
         sb.append("<form method=\"post\" action=\"/admin/severity\">\n");
         sb.append("<input type=\"hidden\" name=\"id\" value=\"").append(c.getId()).append("\">\n");
-        sb.append("<label>Severity (1 to 5)</label>\n<select name=\"severity\">")
-          .append(numberOptions(c.getSeverity())).append("</select>\n");
+        sb.append("<label>Severity (3 Levels: Low, Medium, High)</label>\n<select name=\"severity\">")
+          .append(severityOptions(c.getSeverity())).append("</select>\n");
         sb.append("<label style=\"margin-top:14px;\"><input class=\"check\" type=\"checkbox\" name=\"critical\" value=\"yes\"")
           .append(c.isSafetyCritical() ? " checked" : "").append("> Mark as Safety Critical</label>\n");
         sb.append("<button type=\"submit\">Save Severity</button>\n</form>\n</div></div>\n");
@@ -836,6 +836,22 @@ public class AdminServer {
         for (String v : values) {
             sb.append("<option").append(v.equalsIgnoreCase(selected) ? " selected" : "").append(">")
               .append(Web.esc(v)).append("</option>");
+        }
+        return sb.toString();
+    }
+
+    private String severityOptions(int selected) {
+        StringBuilder sb = new StringBuilder();
+        String[][] levels = {
+            {"1", "1 - Low"},
+            {"2", "2 - Medium"},
+            {"3", "3 - High"}
+        };
+        for (String[] lvl : levels) {
+            int val = Integer.parseInt(lvl[0]);
+            sb.append("<option value=\"").append(val).append("\"")
+              .append(val == selected || (selected > 3 && val == 3) ? " selected" : "")
+              .append(">").append(lvl[1]).append("</option>");
         }
         return sb.toString();
     }

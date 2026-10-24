@@ -66,9 +66,13 @@ public class PriorityCalculator {
 
     public double score(Complaint c) {
         double waiting = Math.min(daysWaiting(c) * 100.0 / MAX_WAIT_DAYS, 100);
-        double score = W_SEVERITY * c.getSeverity() * 20
+        // Normalize 3 levels (1 to 3) to 0-100: level 1 = 33.3%, level 2 = 66.6%, level 3 = 100%
+        double sevScore = Math.min(c.getSeverity(), 3) * (100.0 / 3.0);
+        double urgScore = Math.min(c.getUrgency(), 3) * (100.0 / 3.0);
+        
+        double score = W_SEVERITY * sevScore
                      + W_SUPPORT * supportPercent(c)
-                     + W_URGENCY * c.getUrgency() * 20
+                     + W_URGENCY * urgScore
                      + W_WAITING * waiting;
         return round(score);
     }

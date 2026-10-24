@@ -291,9 +291,10 @@ public class UserServer {
         sb.append("<label>Description</label>\n<textarea name=\"description\" required></textarea>\n");
         sb.append("<label>Category</label>\n<select name=\"category\">").append(cats).append("</select>\n");
         sb.append("<label>Section affected</label>\n<select name=\"affects\">").append(who).append("</select>\n");
-        sb.append("<label>Urgency</label>\n<select name=\"urgency\">")
-          .append("<option value=\"1\">1 - Low</option><option value=\"2\">2</option><option value=\"3\" selected>3 - Medium</option>")
-          .append("<option value=\"4\">4</option><option value=\"5\">5 - Very urgent</option></select>\n");
+        sb.append("<label>Urgency (3 Levels)</label>\n<select name=\"urgency\">")
+          .append("<option value=\"1\">1 - Low (Minor delay)</option>")
+          .append("<option value=\"2\" selected>2 - Medium (Affecting classes)</option>")
+          .append("<option value=\"3\">3 - High (Urgent attention needed)</option></select>\n");
         sb.append("<button type=\"submit\">Submit complaint</button>\n</form>\n</div></div>");
         return sb.toString();
     }
