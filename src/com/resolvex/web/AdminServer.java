@@ -62,7 +62,6 @@ public class AdminServer {
         server.setExecutor(null);
         server.start();
         System.out.println("ResolveX ADMIN is running at http://localhost:" + port);
-        Web.openBrowser("http://localhost:" + port);
     }
 
     // ---------------------------------------------------------------

@@ -45,7 +45,6 @@ public class UserServer {
         server.setExecutor(null);   // one request at a time, keeps the code simple
         server.start();
         System.out.println("ResolveX USER is running at http://localhost:" + port);
-        Web.openBrowser("http://localhost:" + port);
     }
 
     // ---------------------------------------------------------------
