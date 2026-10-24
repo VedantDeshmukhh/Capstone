@@ -90,6 +90,6 @@ public class PriorityCalculator {
         }
         return text + c.getSupporters().size() + " of " + eligiblePeople(c) + " students of "
                 + c.getGroupName() + " support it (" + supportPercent(c) + "%), severity " + c.getSeverity()
-                + "/5, urgency " + c.getUrgency() + "/5, waiting " + daysWaiting(c) + " day(s).";
+                + "/3, urgency " + c.getUrgency() + "/3, waiting " + daysWaiting(c) + " day(s).";
     }
 }

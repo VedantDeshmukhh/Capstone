@@ -143,7 +143,7 @@ public class AdminServer {
                 break;
             }
             case "/admin/ranking":
-                show(ex, "/admin/ranking", rankingPage(sectionOrFirst(q.get("section"))), msg);
+                show(ex, "/admin/ranking", rankingPage(q.get("section")), msg);
                 break;
             case "/admin/stats":
                 show(ex, "/admin/stats", statsPage(sectionOrFirst(q.get("section"))), msg);
@@ -518,10 +518,10 @@ public class AdminServer {
         sb.append("<p class=\"muted\">Auto-prioritized tickets ordered by student consensus, urgency, severity, and waiting time.</p></div></div>\n");
         sb.append(filterBar("/admin/ranking", section));
         sb.append("<div class=\"panel\">\n<table>\n");
-        sb.append("<thead><tr><th>Rank</th><th>ID</th><th>Title</th><th>Score</th><th>Priority Rationale</th></tr></thead><tbody>\n");
+        sb.append("<thead><tr><th>Rank</th><th>ID</th><th>Title</th><th>Section</th><th>Score</th><th>Priority Rationale</th></tr></thead><tbody>\n");
         int rank = 1;
         for (Complaint c : manager.rankedList()) {
-            if (section != null && !c.isForGroup(section)) {
+            if (section != null && !section.isEmpty() && !"ALL".equalsIgnoreCase(section) && !c.isForGroup(section)) {
                 continue;
             }
             sb.append("<tr>");
@@ -529,6 +529,7 @@ public class AdminServer {
             sb.append("<td><span class=\"muted\">#</span>").append(c.getId()).append("</td>");
             sb.append("<td><a class=\"bold\" href=\"/admin/complaint?id=").append(c.getId()).append("\">")
               .append(Web.esc(c.getTitle())).append("</a></td>");
+            sb.append("<td>").append(Layout.sectionBadge(c.getGroupName())).append("</td>");
             sb.append("<td>").append(Layout.scoreBar(calc.score(c), c.isSafetyCritical())).append("</td>");
             sb.append("<td>").append(Web.esc(calc.explain(c))).append("</td>");
             sb.append("</tr>\n");
@@ -595,9 +596,14 @@ public class AdminServer {
 
     private String filterBar(String page, String section) {
         StringBuilder sb = new StringBuilder("<div class=\"filter\">Section: ");
+        boolean allOn = (section == null || section.trim().isEmpty() || "ALL".equalsIgnoreCase(section));
+        sb.append("<a class=\"chip").append(allOn ? " active" : "").append("\" href=\"").append(page)
+          .append("\">All Sections</a>");
+
         for (StudentGroup g : manager.getStore().getGroups()) {
-            boolean on = g.getName().equalsIgnoreCase(section);
-            sb.append("<a class=\"chip").append(on ? " active" : "").append("\" href=\"").append(page)
+            boolean on = !allOn && g.getName().equalsIgnoreCase(section);
+            String chipSecClass = "chip-" + g.getName().toLowerCase();
+            sb.append("<a class=\"chip ").append(chipSecClass).append(on ? " active" : "").append("\" href=\"").append(page)
               .append("?section=").append(Web.encode(g.getName())).append("\">").append(Web.esc(g.getName())).append("</a>");
         }
         return sb.append("</div>\n").toString();
