@@ -1,7 +1,7 @@
 @echo off
 setlocal
 cd /d "%~dp0"
-title ResolveX Demo
+title ResolveX Demo Launcher
 cls
 
 echo ================================================================
@@ -48,11 +48,8 @@ echo   Login           : cse1   /  pass123
 echo                     (or aids1 / pass123, aiml1 / pass123)
 echo.
 echo ================================================================
-echo   Keep this small window open while using the application.
-echo   Press any key to shutdown both servers and exit...
+echo   Servers are running silently in the background.
+echo   To stop servers anytime, double-click STOP.bat
 echo ================================================================
-pause >nul
-
-echo Shutting down servers...
-taskkill /im javaw.exe /f >nul 2>&1
-echo Done.
+timeout /t 5 >nul
+exit

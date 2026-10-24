@@ -518,7 +518,7 @@ public class AdminServer {
         sb.append("<p class=\"muted\">Auto-prioritized tickets ordered by student consensus, urgency, severity, and waiting time.</p></div></div>\n");
         sb.append(filterBar("/admin/ranking", section));
         sb.append("<div class=\"panel\">\n<table>\n");
-        sb.append("<thead><tr><th>Rank</th><th>ID</th><th>Title</th><th>Section</th><th>Score</th><th>Priority Rationale</th></tr></thead><tbody>\n");
+        sb.append("<thead><tr><th>Rank</th><th>ID</th><th>Title</th><th>Section</th><th>Category</th><th>Votes</th><th>Status</th><th>Score</th><th>Priority Rationale</th></tr></thead><tbody>\n");
         int rank = 1;
         for (Complaint c : manager.rankedList()) {
             if (section != null && !section.isEmpty() && !"ALL".equalsIgnoreCase(section) && !c.isForGroup(section)) {
@@ -530,6 +530,10 @@ public class AdminServer {
             sb.append("<td><a class=\"bold\" href=\"/admin/complaint?id=").append(c.getId()).append("\">")
               .append(Web.esc(c.getTitle())).append("</a></td>");
             sb.append("<td>").append(Layout.sectionBadge(c.getGroupName())).append("</td>");
+            sb.append("<td>").append(Layout.categoryBadge(c.getCategory())).append("</td>");
+            sb.append("<td>").append(c.getSupporters().size()).append(" / ").append(calc.eligiblePeople(c))
+              .append(" <span class=\"muted\">(").append(calc.supportPercent(c)).append("%)</span></td>");
+            sb.append("<td>").append(Layout.badge(c)).append("</td>");
             sb.append("<td>").append(Layout.scoreBar(calc.score(c), c.isSafetyCritical())).append("</td>");
             sb.append("<td>").append(Web.esc(calc.explain(c))).append("</td>");
             sb.append("</tr>\n");
