@@ -103,12 +103,23 @@ public class Web {
         send(ex, 200, "text/css; charset=UTF-8", data);
     }
 
-    // opens the browser automatically (ignored if not possible)
+    // opens the browser automatically across platforms (Windows cmd start fallback)
     public static void openBrowser(String url) {
         try {
-            java.awt.Desktop.getDesktop().browse(new URI(url));
-        } catch (Exception e) {
-            // not a problem, the user can type the address
-        }
+            if (java.awt.Desktop.isDesktopSupported() && java.awt.Desktop.getDesktop().isSupported(java.awt.Desktop.Action.BROWSE)) {
+                java.awt.Desktop.getDesktop().browse(new URI(url));
+                return;
+            }
+        } catch (Exception ignored) {}
+        try {
+            String os = System.getProperty("os.name", "").toLowerCase();
+            if (os.contains("win")) {
+                new ProcessBuilder("cmd", "/c", "start", url).start();
+            } else if (os.contains("mac")) {
+                new ProcessBuilder("open", url).start();
+            } else {
+                new ProcessBuilder("xdg-open", url).start();
+            }
+        } catch (Exception ignored) {}
     }
 }
