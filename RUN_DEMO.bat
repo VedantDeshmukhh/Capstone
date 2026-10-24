@@ -1,7 +1,7 @@
 @echo off
 setlocal
 cd /d "%~dp0"
-title ResolveX Demo Launcher
+title ResolveX Platform Launcher
 cls
 
 echo ================================================================
@@ -12,16 +12,13 @@ echo.
 echo [1/3] Checking environment and compiling Java sources ...
 if not exist bin mkdir bin
 
-dir /s /b src\*.java > sources.txt
-javac -encoding UTF-8 -d bin @sources.txt
+javac -encoding UTF-8 -d bin src\com\resolvex\*.java src\com\resolvex\model\*.java src\com\resolvex\service\*.java src\com\resolvex\util\*.java src\com\resolvex\web\*.java
 if errorlevel 1 (
     echo.
     echo [ERROR] Compilation failed. Please ensure JDK 17 or newer is installed.
-    if exist sources.txt del sources.txt
     pause
     exit /b 1
 )
-if exist sources.txt del sources.txt
 echo [OK] Compilation successful.
 echo.
 
